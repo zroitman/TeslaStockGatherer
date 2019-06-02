@@ -73,11 +73,16 @@ class Fidelity:
 		buy_orders = parent.find_element_by_class_name("fifth")
 		sell_orders = parent.find_element_by_class_name("seventh")
 
+		self.driver.quit()
 		return [buy_orders.text, sell_orders.text]
 
 
 
 if __name__ == '__main__':
+	api = Robinhood()
+	holdings = api.get_holdings()
+	margin_initial_ratio = api.get_margin_initial_ratio()
+	maintenance_ratio = api.get_maintenance_ratio()
 	scrape = Fidelity()
 	scrape.initiate_browser()
 	orders = scrape.find_tesla_orders()
