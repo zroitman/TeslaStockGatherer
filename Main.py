@@ -13,6 +13,7 @@ def start():
 	scrape = Fidelity()
 	scrape.initiate_browser()
 	orders = scrape.find_tesla_orders()
+	scrape.close_webdriver()
 
 	#Puts data into spreadsheet
 	write_data = Spreadsheet(holdings, margin_initial_ratio, maintenance_ratio, orders[0], orders[1])

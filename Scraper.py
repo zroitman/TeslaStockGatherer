@@ -63,9 +63,9 @@ class Fidelity:
 		#Attempts to find tesla in table and gather orders
 		#
 		try:
-			tesla = self.driver.find_element_by_id("t_trigger_TSLA7")
+			tesla = self.driver.find_element_by_xpath("//a[@href='https://qr.fidelity.com/embeddedquotes/redirect/research?symbol=TSLA']")
 		except:
-			return false
+			return [0, 0]
 
 		table = self.driver.find_element_by_id("topOrdersTable")
 		parent = tesla.find_element_by_xpath("../../../..")
@@ -73,9 +73,12 @@ class Fidelity:
 		buy_orders = parent.find_element_by_class_name("fifth")
 		sell_orders = parent.find_element_by_class_name("seventh")
 
-		#self.driver.quit()
 		return [buy_orders.text, sell_orders.text]
 
+	def close_webdriver(self):
+		#Closes webdriver
+		#
+		self.driver.quit()
 
 
 if __name__ == '__main__':
@@ -86,4 +89,8 @@ if __name__ == '__main__':
 	scrape = Fidelity()
 	scrape.initiate_browser()
 	orders = scrape.find_tesla_orders()
-	print(orders)
+	scrape.close_webdriver()
+	print(f"Holdings: {holdings}\n")
+	print(f"Marging Initial Ratio: {margin_initial_ratio}\n")
+	print(f"Maintenance ratio: {maintenance_ratio}\n")
+	print(f"Orders: {orders}\n")
