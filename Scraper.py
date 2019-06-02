@@ -1,6 +1,8 @@
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver import DesiredCapabilities
+import time
 
 class Robinhood:
 	def __init__(self):
@@ -49,10 +51,10 @@ class Fidelity:
 		#Launches chrome
 		#
 		self.url = 'https://eresearch.fidelity.com/eresearch/gotoBL/fidelityTopOrders.jhtml'
-		self.driver = webdriver.Chrome(executable_path='.\\dependencies\\chromedriver.exe')
 		self.options = Options()
-		self.options.add_argument("--headless")
-		self.options.add_argument("--window-size=1920x1080")
+		#self.options.add_argument("--headless")
+		self.options.add_argument("--window-size=1500,1000")
+		self.driver = webdriver.Chrome(executable_path='.\\dependencies\\chromedriver.exe', options = self.options)
 
 	def initiate_browser(self):
 		#Gets fidelity page
@@ -62,10 +64,10 @@ class Fidelity:
 	def find_tesla_orders(self):
 		#Attempts to find tesla in table and gather orders
 		#
-		try:
-			tesla = self.driver.find_element_by_xpath("//a[@href='https://qr.fidelity.com/embeddedquotes/redirect/research?symbol=TSLA']")
-		except:
-			return [0, 0]
+		# try:
+		tesla = self.driver.find_element_by_xpath("//a[@href='https://qr.fidelity.com/embeddedquotes/redirect/research?symbol=TSLA']")
+		# except:
+		# 	return [0, 0]
 
 		table = self.driver.find_element_by_id("topOrdersTable")
 		parent = tesla.find_element_by_xpath("../../../..")
@@ -88,6 +90,7 @@ if __name__ == '__main__':
 	maintenance_ratio = api.get_maintenance_ratio()
 	scrape = Fidelity()
 	scrape.initiate_browser()
+	time.sleep(1)
 	orders = scrape.find_tesla_orders()
 	scrape.close_webdriver()
 	print(f"Holdings: {holdings}\n")
