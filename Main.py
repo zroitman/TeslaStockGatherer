@@ -3,15 +3,24 @@ from Excel import Spreadsheet
 from os.path import isfile
 
 def start():
-	scraper = Robinhood()
-	holdings = scraper.get_holdings()
-	margin_initial_ratio = scraper.get_margin_initial_ratio()
-	maintenance_ratio = scraper.get_maintenance_ratio()
-	write_data = Spreadsheet(holdings, margin_initial_ratio, maintenance_ratio, 0, 0)
-	if isfile("Stock Logs.xlsx"):
-		write_data.load_workbook():
+	#Navigates robinhood api for tesla holdings and ratios
+	api = Robinhood()
+	holdings = api.get_holdings()
+	margin_initial_ratio = api.get_margin_initial_ratio()
+	maintenance_ratio = api.get_maintenance_ratio()
+
+	#Scrapes fidelity for tesla buy and sell orders
+	scrape = Fidelity()
+	scrape.initiate_browser()
+	orders = scrape.find_tesla_orders()
+
+	#Puts data into spreadsheet
+	write_data = Spreadsheet(holdings, margin_initial_ratio, maintenance_ratio, orders[0], orders[1])
+	if isfile("Tesla Stock Logs.xlsx"):
+		write_data.load_workbook()
 	else:
-		write_data.new_workbook():
+		write_data.new_workbook()
+	write_data.save_data()
 
 
 
