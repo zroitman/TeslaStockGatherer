@@ -73,7 +73,7 @@ class Fidelity:
 		buy_orders = parent.find_element_by_class_name("fifth")
 		sell_orders = parent.find_element_by_class_name("seventh")
 
-		self.driver.quit()
+		#self.driver.quit()
 		return [buy_orders.text, sell_orders.text]
 
 

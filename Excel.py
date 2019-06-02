@@ -6,7 +6,7 @@ class Spreadsheet:
 		#Sets up data
 		#
 		self.holdings = holdings
-		self.margins = margin_initial_ratio
+		self.margin_initial_ratio = margin_initial_ratio
 		self.maintenance_ratio = maintenance_ratio
 		self.buy_orders = buy_orders
 		self.sell_orders = sell_orders
