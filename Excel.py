@@ -22,11 +22,12 @@ class Spreadsheet:
 		self.ws = self.wb.active
 		self.ws.column_dimensions["A"].width = 11
 		self.ws['A1'] = "Date"
-		self.ws['B1'] = "Fidelity Holdings"
+		self.ws['B1'] = "Robinhood Holdings"
 		self.ws['C1'] = "Margin Initial Ratio"
 		self.ws['D1'] = "Maintenance Ratio"
 		self.ws['E1'] = "Buy Orders"
 		self.ws['F1'] = "Sell Orders"
+		self.ws['G1'] = "Prices"
 
 	def load_workbook(self):
 		#Opens up spreadsheet to write in new data
@@ -44,4 +45,5 @@ class Spreadsheet:
 		self.ws.cell(column=4, row = self.row, value = self.maintenance_ratio)
 		self.ws.cell(column=5, row = self.row, value = self.buy_orders)
 		self.ws.cell(column=6, row = self.row, value = self.sell_orders)
+		self.ws.cell(column=7, row = self.row, value = '=FDS("TSLA","FG_PRICE(A'+str(self.row)+',A'+str(self.row)+')")')
 		self.wb.save("Tesla Stock Logs.xlsx")
