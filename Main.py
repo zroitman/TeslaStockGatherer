@@ -1,6 +1,7 @@
 from Scraper import Robinhood, Fidelity
 from Excel import Spreadsheet
 from os.path import isfile
+import time
 
 def start():
 	#Navigates robinhood api for tesla holdings and ratios
@@ -12,7 +13,9 @@ def start():
 	#Scrapes fidelity for tesla buy and sell orders
 	scrape = Fidelity()
 	scrape.initiate_browser()
+	time.sleep(1)
 	orders = scrape.find_tesla_orders()
+	scrape.close_webdriver()
 
 	#Puts data into spreadsheet
 	write_data = Spreadsheet(holdings, margin_initial_ratio, maintenance_ratio, orders[0], orders[1])
