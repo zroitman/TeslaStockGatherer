@@ -45,5 +45,5 @@ class Spreadsheet:
 		self.ws.cell(column=4, row = self.row, value = self.maintenance_ratio)
 		self.ws.cell(column=5, row = self.row, value = self.buy_orders)
 		self.ws.cell(column=6, row = self.row, value = self.sell_orders)
-		self.ws.cell(column=7, row = self.row, value = '=FDS("TSLA","FG_PRICE(A'+str(self.row)+',A'+str(self.row)+')")')
+		self.ws.cell(column=7, row = self.row, value = '=FDS("TSLA","FG_PRICE("&A'+str(self.row)+'&","&A'+str(self.row)+'&")")') 
 		self.wb.save("Tesla Stock Logs.xlsx")
