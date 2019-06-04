@@ -21,9 +21,11 @@ def start():
 	write_data = Spreadsheet(holdings, margin_initial_ratio, maintenance_ratio, orders[0], orders[1])
 	if isfile("Tesla Stock Logs.xlsx"):
 		write_data.load_workbook()
+		write_data.calculate_data()
+		write_data.save_data()
 	else:
 		write_data.new_workbook()
-	write_data.save_data()
+		write_data.save_data()
 
 
 
