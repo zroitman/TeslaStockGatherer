@@ -1,7 +1,9 @@
 import requests
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver import DesiredCapabilities
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.common.by import By
 import time
 
 class Robinhood:
@@ -48,13 +50,14 @@ class Robinhood:
 
 class Fidelity:
 	def __init__(self):
-		#Launches chrome
+		#Launches firefox
 		#
 		self.url = 'https://eresearch.fidelity.com/eresearch/gotoBL/fidelityTopOrders.jhtml'
 		self.options = Options()
-		#self.options.add_argument("--headless")
-		self.options.add_argument("--window-size=1500,1000")
-		self.driver = webdriver.Chrome(executable_path='.\\dependencies\\chromedriver.exe', options = self.options)
+		self.options.add_argument("--width=1500")
+		self.options.add_argument("--height=900")
+		self.options.headless = True
+		self.driver = webdriver.Firefox(executable_path='.\\dependencies\\geckodriver.exe', options = self.options)
 
 	def initiate_browser(self):
 		#Gets fidelity page
@@ -65,7 +68,9 @@ class Fidelity:
 		#Attempts to find tesla in table and gather orders
 		#
 		# try:
-		tesla = self.driver.find_element_by_xpath("//a[@href='https://qr.fidelity.com/embeddedquotes/redirect/research?symbol=TSLA']")
+		wait = WebDriverWait(self.driver, 5)
+		tesla = wait.until(ec.visibility_of_element_located((By.CSS_SELECTOR, '[id*="t_trigger_TSLA"]')))
+		#tesla = self.driver.find_element_by_xpath("//a[@href='https://qr.fidelity.com/embeddedquotes/redirect/research?symbol=TSLA']")
 		# except:
 		# 	return [0, 0]
 
