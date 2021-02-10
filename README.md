@@ -1,5 +1,5 @@
 # TeslaStockGatherer
-Gathers a variety of items from robinhood and fidelity.
+Web-scraping project that gathers a variety of items from robinhood and fidelity on Tesla.
 
 Uses robinhood api to gather tesla holdings and ratios. Uses selenium to webscrape fidelity's top customer orders page for sell and buy orders.
 
